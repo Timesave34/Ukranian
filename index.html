@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Learn Ukrainian</title>
+<title>Learn Ukrainian v1</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1f4e9c">
 <link rel="icon" href="icon-192.png">
@@ -184,7 +184,7 @@ let order=P.map((_,i)=>i),favs=[];
 try{const o=JSON.parse(localStorage.getItem("ukro")||"null");if(Array.isArray(o)&&new Set(o).size===o.length&&o.every(i=>Number.isInteger(i)&&i>=0&&i<P.length))order=o.concat(P.map((_,i)=>i).filter(i=>!o.includes(i)));const f=JSON.parse(localStorage.getItem("ukrf")||"[]");if(Array.isArray(f))favs=f}catch(e){}
 const saveOrder=()=>{try{localStorage.setItem("ukro",JSON.stringify(order));localStorage.setItem("ukrf",JSON.stringify(favs))}catch(e){}};
 function phrases(){
-view.innerHTML=`<div class="tip">Tap ☆ to move a phrase to the top, or use ▲ ▼ to place it exactly. Flashcards follow this order. <b>Ви</b> tags are polite (strangers, older people); <b>ти</b> tags are friendly (friends, people you know well).</div><div class="hdr"><span>Ukrainian</span><span>Pronunciation</span><span>English</span></div>`+order.map((pi,pos)=>{const p=P[pi],f=favs.includes(pi);return `<div class="row${p[3]?" d":""}"><button class="main" data-i="${pi}"><span class="uk">${p[0]}</span><span class="tr">${p[1]}</span><span class="en">${p[2]}</span>${p[4]?'<span class="vtag '+p[4]+'">'+(p[4]==="f"?"Ви · formal":"ти · informal")+'</span>':""}</button><div class="ctl"><button data-a="f" data-pos="${pos}" class="${f?"on":""}" aria-label="${f?"Unfavourite":"Favourite and move to top"}">${f?"★":"☆"}</button><button data-a="u" data-pos="${pos}" aria-label="Move up" ${pos===0?"disabled":""}>▲</button><button data-a="d" data-pos="${pos}" aria-label="Move down" ${pos===order.length-1?"disabled":""}>▼</button></div></div>`}).join("");
+view.innerHTML=`<div class="tip"><b>Ви</b> tags are polite (strangers, older people); <b>ти</b> tags are friendly (friends, people you know well).</div><div class="hdr"><span>Ukrainian</span><span>Pronunciation</span><span>English</span></div>`+order.map((pi,pos)=>{const p=P[pi],f=favs.includes(pi);return `<div class="row${p[3]?" d":""}"><button class="main" data-i="${pi}"><span class="uk">${p[0]}</span><span class="tr">${p[1]}</span><span class="en">${p[2]}</span>${p[4]?'<span class="vtag '+p[4]+'">'+(p[4]==="f"?"Ви · formal":"ти · informal")+'</span>':""}</button><div class="ctl"><button data-a="f" data-pos="${pos}" class="${f?"on":""}" aria-label="${f?"Unfavourite":"Favourite and move to top"}">${f?"★":"☆"}</button><button data-a="u" data-pos="${pos}" aria-label="Move up" ${pos===0?"disabled":""}>▲</button><button data-a="d" data-pos="${pos}" aria-label="Move down" ${pos===order.length-1?"disabled":""}>▼</button></div></div>`}).join("");
 view.querySelectorAll(".main").forEach(b=>b.onclick=()=>say(P[b.dataset.i][0]));
 view.querySelectorAll(".ctl button").forEach(b=>b.onclick=()=>{const pos=+b.dataset.pos,a=b.dataset.a,pi=order[pos],y=scrollY;
 if(a==="f"){if(favs.includes(pi))favs=favs.filter(x=>x!==pi);else{favs.push(pi);order.splice(pos,1);order.unshift(pi)}}
