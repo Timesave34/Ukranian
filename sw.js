@@ -1,6 +1,6 @@
 // Bump VERSION whenever you change any file, so devices fetch the update.
-const VERSION="ukr-v12";
-const FILES=["./","./index.html","./manifest.webmanifest","./icon-1921.png","./icon-5121.png"];
+const VERSION="ukr-v9";
+const FILES=["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(VERSION).then(c=>c.addAll(FILES)));self.skipWaiting()});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==VERSION).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener("fetch",e=>{

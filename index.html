@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Learn Ukrainian v1.1</title>
+<title>Learn Ukrainian</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1f4e9c">
-<link rel="icon" href="icon-1921.png">
-<link rel="apple-touch-icon" href="icon-1921.png">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Ukrainian">
@@ -51,7 +51,7 @@ button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .bar i{display:block;height:100%;background:var(--gold)}
 .tip{background:var(--surface);border-left:4px solid var(--gold);padding:10px 14px;border-radius:6px;margin-bottom:16px;font-size:.95rem}
 .row{padding:0;cursor:default;gap:0;align-items:stretch}
-.row .main{flex:1;background:none;border:0;padding:6px 7px;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.row .main{flex:1;background:none;border:0;padding:12px 14px;text-align:left;font:inherit;color:inherit;cursor:pointer}
 .ctl{display:flex;align-items:center;gap:2px;padding-right:6px}
 .ctl button{background:none;border:0;min-width:40px;min-height:44px;font-size:1.1rem;color:var(--muted);cursor:pointer;border-radius:8px}
 .ctl button.on{color:var(--gold)}
@@ -77,7 +77,7 @@ select.btn{margin:0 0 12px;width:100%}
 <body>
 <div class="wrap">
 <div class="band"></div>
-<h1>Learn Ukrainian v1.10</h1>
+<h1>Learn Ukrainian</h1>
 <p class="sub">Learn the alphabet, then everyday phrases. Tap anything to hear it spoken by a Ukrainian voice.</p>
 <nav role="tablist" id="tabs">
 <button role="tab" data-t="letters" aria-selected="true">Alphabet</button>
@@ -184,7 +184,7 @@ let order=P.map((_,i)=>i),favs=[];
 try{const o=JSON.parse(localStorage.getItem("ukro")||"null");if(Array.isArray(o)&&new Set(o).size===o.length&&o.every(i=>Number.isInteger(i)&&i>=0&&i<P.length))order=o.concat(P.map((_,i)=>i).filter(i=>!o.includes(i)));const f=JSON.parse(localStorage.getItem("ukrf")||"[]");if(Array.isArray(f))favs=f}catch(e){}
 const saveOrder=()=>{try{localStorage.setItem("ukro",JSON.stringify(order));localStorage.setItem("ukrf",JSON.stringify(favs))}catch(e){}};
 function phrases(){
-view.innerHTML=`<div class="tip"><b>Ви</b> tags are polite (strangers, older people); <b>ти</b> tags are friendly (friends, people you know well).</div><div class="hdr"><span>Ukrainian</span><span>Pronunciation</span><span>English</span></div>`+order.map((pi,pos)=>{const p=P[pi],f=favs.includes(pi);return `<div class="row${p[3]?" d":""}"><button class="main" data-i="${pi}"><span class="uk">${p[0]}</span><span class="tr">${p[1]}</span><span class="en">${p[2]}</span>${p[4]?'<span class="vtag '+p[4]+'">'+(p[4]==="f"?"Ви · formal":"ти · informal")+'</span>':""}</button><div class="ctl"><button data-a="f" data-pos="${pos}" class="${f?"on":""}" aria-label="${f?"Unfavourite":"Favourite and move to top"}">${f?"★":"☆"}</button><button data-a="u" data-pos="${pos}" aria-label="Move up" ${pos===0?"disabled":""}>▲</button><button data-a="d" data-pos="${pos}" aria-label="Move down" ${pos===order.length-1?"disabled":""}>▼</button></div></div>`}).join("");
+view.innerHTML=`<div class="tip">Tap ☆ to move a phrase to the top, or use ▲ ▼ to place it exactly. Flashcards follow this order. <b>Ви</b> tags are polite (strangers, older people); <b>ти</b> tags are friendly (friends, people you know well).</div><div class="hdr"><span>Ukrainian</span><span>Pronunciation</span><span>English</span></div>`+order.map((pi,pos)=>{const p=P[pi],f=favs.includes(pi);return `<div class="row${p[3]?" d":""}"><button class="main" data-i="${pi}"><span class="uk">${p[0]}</span><span class="tr">${p[1]}</span><span class="en">${p[2]}</span>${p[4]?'<span class="vtag '+p[4]+'">'+(p[4]==="f"?"Ви · formal":"ти · informal")+'</span>':""}</button><div class="ctl"><button data-a="f" data-pos="${pos}" class="${f?"on":""}" aria-label="${f?"Unfavourite":"Favourite and move to top"}">${f?"★":"☆"}</button><button data-a="u" data-pos="${pos}" aria-label="Move up" ${pos===0?"disabled":""}>▲</button><button data-a="d" data-pos="${pos}" aria-label="Move down" ${pos===order.length-1?"disabled":""}>▼</button></div></div>`}).join("");
 view.querySelectorAll(".main").forEach(b=>b.onclick=()=>say(P[b.dataset.i][0]));
 view.querySelectorAll(".ctl button").forEach(b=>b.onclick=()=>{const pos=+b.dataset.pos,a=b.dataset.a,pi=order[pos],y=scrollY;
 if(a==="f"){if(favs.includes(pi))favs=favs.filter(x=>x!==pi);else{favs.push(pi);order.splice(pos,1);order.unshift(pi)}}
